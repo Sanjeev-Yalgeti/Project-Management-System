@@ -6,7 +6,6 @@ const CompanySchema=new mongoose.Schema({
     },
     avatar:{
         type:String,
-
     },
     noOfProjects:{
         type:Number,

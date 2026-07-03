@@ -1,5 +1,9 @@
 import mongoose from 'mongoose'
 const notesSchema=new mongoose.Schema({
+    title:{
+        type:String,
+        required:true,
+    },
     description:{
         type:String,
         required:true,
@@ -9,11 +13,6 @@ const notesSchema=new mongoose.Schema({
         ref:'User',
         required:true,
 
-    },
-    createdOn:{
-        type:Date,
-        default:Date.now,
-        required:true,
     },
     expiry:{
         type:Date,

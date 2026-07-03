@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-const TaskSchema=new mongoose.Schema({
+const taskSchema=new mongoose.Schema({
     objective:{
         type:String,
         required:true,
@@ -29,4 +29,4 @@ const TaskSchema=new mongoose.Schema({
     },
 },{timestamps:true}
 )  
-export const Task=mongoose.model("Task",TaskSchema)
+export const Task=mongoose.model("Task",taskSchema)

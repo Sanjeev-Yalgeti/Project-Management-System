@@ -3,26 +3,30 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs"
 
 const userSchema= new mongoose.Schema({
-    Username:{
+    username:{
         type:String,
         required:true,
         unique:true,
-        min:[6,"Username should contain atleast 6 charcaters"],
-        max:[40,"Username should not exceed 40 characters"],
+        minlength:[6,"Username should contain atleast 6 charcaters"],
+        maxlength:[40,"Username should not exceed 40 characters"],
+        
     },
     password:{
         type:String,
         required:true,
-        min:[8,"Password should contain atleast 8 characters"],
-        max:[20,"Password should not exceed 20 characters "],
+        minlength:[8,"Password should contain atleast 8 characters"],
+        maxlength:[20,"Password should not exceed 20 characters "],
     },
     email:{
         type:String,
         required:true,
-        unique:true
+        lowercase:true,
+        unique:true,
+        trim:true,
     },
     avatar:{
-        type:String
+        public_id:String,
+        url:string,
     },
     fullname:{
         type:String,
@@ -30,15 +34,14 @@ const userSchema= new mongoose.Schema({
     }
 },{timestamps:true})
 
-userSchema.pre("save",function(next){
-    if(!this.isModeified("password"))return next();
-    bcrypt.hash(this.password,10);
+userSchema.pre("save",async function(next){
+    if(!this.isModified("password"))return next();
+    this.password= await bcrypt.hash(this.password,10);
+    next();
 })
 
-
-
 userSchema.methods.isPasswordCorrect=async function(password){
-    await bcrypt.compare(this.password,password)
+    await bcrypt.compare(password,this.password)
 }
 
 userSchema.methods.generateAccessToken= function(){
@@ -47,18 +50,19 @@ userSchema.methods.generateAccessToken= function(){
         username=this.username,
         email=this.email,
         fullname=this.fullname,
-    },process.env.RFERESH_TOKEN_SECRET_KEY,{
-        expiresIn:REFRESH_TOKEN_EXPIRY
+    },process.env.ACCESS_TOKEN_SECRET_KEY,{
+        expiresIn:ACCESS_TOKEN_EXPIRY
     })
 }
 
 userSchema.methods.generateRefereshToken =function(){
     return jwt.sign({
         _id=this._id
-    },process.env.ACCESS_TOKEN_SECRET_KEY,{
-        expiresIn:ACCESS_TOKEN_EXPIRY
+    },process.env.REFRESH_TOKEN_SECRET_KEY,{
+        expiresIn:REFRESH_TOKEN_EXPIRY
     })
 }
 
-const User = mongoose.models("User",userSchema);
+const User = mongoose.model("User",userSchema);
+export default User
 

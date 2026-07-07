@@ -1,9 +1,9 @@
-import ProtectedRoute from './assets/components/ProtectedRoute.jsx'
+import ProtectedRoute from '../assets/components/ProtectedRoute.jsx'
 import {BrowserRouter,Route,Routes,Navigate} from 'react-router-dom'
-import AuthProvider from './assets/hooks/useAuth.jsx'
+import {AuthProvider} from '../assets/hooks/useAuth.jsx'
 //Pages
-import Login from './pages/Login.jsx'
-import Dashboard from './pages/Dashboard.jsx'
+import Login from './Login.jsx'
+import Dashboard from './Dashboard.jsx'
 export default function App(){
     return(
         <AuthProvider>

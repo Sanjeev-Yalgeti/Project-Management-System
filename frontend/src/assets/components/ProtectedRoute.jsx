@@ -1,5 +1,5 @@
 import {Navigate,Outlet} from 'react-router-dom'
-import {useAuth} from '../hooks/useAuth.js'
+import {useAuth} from '../hooks/useAuth.jsx'
 import { Hatch } from 'ldrs/react'
 import 'ldrs/react/Hatch.css'
 

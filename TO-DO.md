@@ -5,6 +5,7 @@ Completed:
 - Config done?
 - Created MongoDB Atlas
 - Semi setup Cloudinary
+- db connection 
 
 Pending:
 - Routing

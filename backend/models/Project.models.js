@@ -20,11 +20,11 @@ const projectSchema=new mongoose.Schema({
         ref:"User",
         required:true,
     },
-    creationDate:{
-        type:Date,
-        required:true,
-        default:Date.now,
-    },
+    // creationDate:{
+    //     type:Date,
+    //     required:true,
+    //     default:Date.now,
+    // },
     members:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:'User',
@@ -35,5 +35,5 @@ const projectSchema=new mongoose.Schema({
         ref:"Task",
         default:[],
     }],
-})
+},{timestamps:true})
 export const Project=mongoose.model("Project",projectSchema)

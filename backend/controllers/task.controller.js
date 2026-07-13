@@ -36,12 +36,42 @@ const addTask = asyncHandler (async (req,res) => {
         new ApiResponse(201,task,"Task created successfully ")
     )
 })
-
+//fetch tasks of the user
+const userTask=asyncHandler(async (req,res)=>{
+    const userTaskList=await Task.find({
+        projectId:project._id,
+        assignedTo:user_.id
+    })
+    return res.status(201).json(
+        new ApiResponse(201,userTaskList,"Tasks successfully fetched")
+    )
+})
 const updateTaskStautus = asyncHandler( async (req,res) => {
-
+    const {id}=req.params;
+    const {status }=req.body;
+    const taskUpdate=await Task.findByIdAndUpdate(
+        id,
+        status
+    );
+    if(!taskUpdate)
+    {
+        return new ApiError(401)
+    }
+    return res.status(201).json(
+        new ApiResponse(201,"Task Updated successfully")
+    )
 })
 
 const deleteTask = asyncHandler( async (req,res) => {
-    
+    const {title}=req.body;
+    const deleteTask=await Task.findByIdAndDelete(
+        title
+    )
+    if(!deleteTask){
+        return new ApiError(401,deleteTask)
+    }
+    return res.status(201).json(
+        new ApiResponse(201,"Task deleted successfully")
+    )
 })
 

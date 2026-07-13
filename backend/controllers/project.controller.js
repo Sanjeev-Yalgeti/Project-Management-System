@@ -6,7 +6,7 @@ import asyncHandler from '../utils/asyncHandler.js'
 
 const addProject =asyncHandler(async (req,res) =>
     {
-        const {title ,description,user._id,members,task }=req.body;
+        const {title ,description,user,members,task }=req.body;
         
         if ([title,description,userId].some((field)=>field?.trim()===''))
     {
@@ -46,5 +46,6 @@ const listProject =asyncHandler(async (req,res)=>{
         new ApiResponse(201,projectList,"Projects fetched successfully")
     )
 })
+
 
 export {addProject,listProject};
